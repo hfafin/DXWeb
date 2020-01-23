@@ -5,6 +5,7 @@ var ctx = new AudioContext();
 
 window.onload = function()
 {
+	document.getElementById("btn").onclick = function() {playNote(69,127)};
 	var ratio = document.getElementById("ratio");
 	var mod = document.getElementById("mod");
 	var attack = document.getElementById("attack");
@@ -15,13 +16,14 @@ window.onload = function()
 
 async function init(ctx)
 {
-		if (navigator.requestMIDIAccess) {
-        navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
+	if (navigator.requestMIDIAccess) {
+    	navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
     } 
     else {
         console.log("No MIDI support present in your browser.    You're gonna have a bad time.");
     }
-		await resumeContext(ctx);			
+	await resumeContext(ctx);
+	playNote(69,127);			
 }
 
 function playNote(noteNumber, velocity)
@@ -132,3 +134,5 @@ function noteOn (noteNumber, velocity) {
 function noteOff (noteNumber) {
     console.log('note off', noteNumber);
 }
+
+
