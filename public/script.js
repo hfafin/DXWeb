@@ -60,13 +60,13 @@ function playNote(noteNumber, velocity)
 	envA.connect(out);
 
 	envA.gain.cancelScheduledValues(now);
-	envA.gain.linearRampToValueAtTime(0.5, now + a);
-	envA.gain.setValueAtTime(0.5, now + a);
+	envA.gain.linearRampToValueAtTime((velocity/256), now + a);
+	envA.gain.setValueAtTime((velocity/256), now + a);
 	envA.gain.exponentialRampToValueAtTime(0.0001, now + d);	
 
 	envB.gain.cancelScheduledValues(now);
-	envB.gain.linearRampToValueAtTime(modAmount , now + ModA);
-	envB.gain.setValueAtTime(modAmount , now + ModA);
+	envB.gain.linearRampToValueAtTime(modAmount*(velocity/127) , now + ModA);
+	envB.gain.setValueAtTime(modAmount*(velocity/127) , now + ModA);
 	envB.gain.exponentialRampToValueAtTime(0.0001, now + ModD);	
 
 }
@@ -120,10 +120,6 @@ function midiMessageEventHandler (event) {
 
 function continuousController (ctrlNumber, value) {
     console.log("ctrlNumber", ctrlNumber)
-    if (ctrlNumber === 75) {
-        filter.frequency.value = ((Math.exp(value / 127) - 1)) * freqMax;
-        filterDefault = filter.frequency.value;
-    }
 }
 
 function noteOn (noteNumber, velocity) {
